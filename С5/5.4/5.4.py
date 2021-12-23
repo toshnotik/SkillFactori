@@ -7,7 +7,7 @@ html = requests.get('https://www.python.org/').content  # получим html г
 # создадим объект ElementTree. Он возвращается функцией parse()
 tree = etree.parse('Welcome to Python.org.html', lxml.html.HTMLParser())  # попытаемся спарсить наш файл с помощью html парсера
 
-ul = tree.findall('body/div/div[3]/div/section/div[3]/div[1]/div/ul/li')  # помещаем в аргумент методу findall скопированный xpath
+ul = tree.findall('//*[@id="content"]/div/section/div[2]/div[1]/div/ul/li')  # помещаем в аргумент методу findall скопированный xpath
 
 # создаём цикл в котором мы будем выводить название каждого элемента из списка
 for li in ul:
