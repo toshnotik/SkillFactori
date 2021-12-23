@@ -5,9 +5,12 @@ bot = telebot.TeleBot(TOKEN)
 
 # Обрабатываются все сообщения, содержащие команды '/start' or '/help'.
 @bot.message_handler(commands=['start', 'help'])
-def handle_start_help(message):
-    pass
+def repeat(message: telebot.types.Message):
+    bot.reply_to(message, f'Здороф, {message.chat.username}')
 
+@bot.message_handler(content_types=['photo', ])
+def function_mems(message: telebot.types.Message):
+    bot.reply_to(message, f'Nice meme XDD')
 
 @bot.message_handler(content_types=['voice', ])
 def function_name(message: telebot.types.Message):
