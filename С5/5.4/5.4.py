@@ -4,7 +4,13 @@ from lxml import etree
 
 html = requests.get('https://www.python.org/').content  # получим html главной странички официального сайта python
 
-tree = lxml.html.document_fromstring(html)
-title = tree.xpath('/html/head/title/text()') # забираем текст тега <title> из тега <head>, который лежит в свою очередь внутри тега <html> (в этом невидимом теге <head> у нас хранится основная информация о страничке. Её название и инструкции по отображению в браузере.
+# создадим объект ElementTree. Он возвращается функцией parse()
+tree = etree.parse('Welcome to Python.org.html', lxml.html.HTMLParser())  # попытаемся спарсить наш файл с помощью html парсера
 
-print(title)
+ul = tree.findall('body/div/div[3]/div/section/div[3]/div[1]/div/ul/li')  # помещаем в аргумент методу findall скопированный xpath
+
+# создаём цикл в котором мы будем выводить название каждого элемента из списка
+for li in ul:
+    a = li.find('a')  # в каждом элементе находим где хранится название. У нас это тег <a>
+    time = li.find('time') # в каждом элементе находим атрибут. У нас это тег <time>
+    print(time.get('datetime'), a.text)  # из этого тега забираем текст - это и будет нашим названием
